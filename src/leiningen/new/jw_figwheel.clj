@@ -1,8 +1,8 @@
-(ns leiningen.new.figwheel
+(ns leiningen.new.jw-figwheel
   (:require [leiningen.new.templates :refer [renderer name-to-path ->files]]
             [leiningen.core.main :as main]))
 
-(def render (renderer "figwheel"))
+(def render (renderer "jw-figwheel"))
 
 
 ;; Check if om or reagent are in the options
@@ -29,7 +29,7 @@
       (main/abort "Both --om and --reagent where selected. Please choose one")
       valid-opts)))
 
-(defn figwheel
+(defn jw-figwheel
   "Takes a name and options with the form --option and produces an interactive
    ClojureScript + Fighweel template.
    The valid options are:
@@ -50,9 +50,10 @@
                 :reagent? (reagent? opts)}]
       (main/info "Generating fresh 'lein new' figwheel project.")
       (->files data
-               ["README.md" (render "README.md" data)]               
+               ["README.md" (render "README.md" data)]
                ["project.clj" (render "project.clj" data)]
                ["src/{{sanitized}}/core.cljs" (render "core.cljs" data)]
                ["resources/public/index.html" (render "index.html" data)]
                ["resources/public/css/style.css" (render "style.css" data)]
+               ["dev/user.clj" (render "user.clj" data)]
                [".gitignore" (render "gitignore" data)]))))
